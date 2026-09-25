@@ -27,6 +27,13 @@ export async function GET(req: NextRequest) {
       maxAge: Math.min(session.expiresIn || 3600, 24 * 60 * 60),
       path: "/",
     });
+    res.cookies.set("id_token", session.idToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: Math.min(session.expiresIn || 3600, 24 * 60 * 60),
+      path: "/",
+    });
     res.cookies.delete("oauth_state");
     return res;
   } catch (err) {
