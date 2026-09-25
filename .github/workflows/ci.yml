@@ -1,0 +1,29 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Build
+        run: npm run build
+        env:
+          # Dummy values: the build only needs the variables to exist.
+          SCALEKIT_ENVIRONMENT_URL: https://example.scalekit.com
+          SCALEKIT_CLIENT_ID: ci
+          SCALEKIT_CLIENT_SECRET: ci
+          NEXT_PUBLIC_APP_URL: http://localhost:3000
+          MONGODB_URL: mongodb://localhost/ci
+          GEMINI_API_KEY: ci
