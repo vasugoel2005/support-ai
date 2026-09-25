@@ -39,12 +39,13 @@ const navigate=useRouter()
             desc: "Your customers get instant support 24/7."
         }
     ]
-    const handleLogOut=async ()=>{
+    const handleLogOut = async () => {
         try {
-            await axios.post("/api/auth/logout")
-            window.location.href = "/"
+            const { data } = await axios.post("/api/auth/logout")
+            window.location.href = data.logoutUrl
         } catch (error) {
             console.log(error)
+            window.location.href = "/"
         }
     }
 
