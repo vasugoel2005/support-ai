@@ -39,7 +39,8 @@ const navigate=useRouter()
             desc: "Your customers get instant support 24/7."
         }
     ]
-    const handleLogOut = async () => {
+     const handleLogOut = async () => {
+        if (!window.confirm("Are you sure you want to log out?")) return
         try {
             const { data } = await axios.post("/api/auth/logout")
             window.location.href = data.logoutUrl
@@ -48,7 +49,6 @@ const navigate=useRouter()
             window.location.href = "/"
         }
     }
-
     return (
         <div className='min-h-screen bg-linear-to-br from-white to-zinc-50 text-zinc-900 overflow-x-hidden'>
             <motion.div
